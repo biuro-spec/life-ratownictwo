@@ -24,7 +24,7 @@ const BlogSidebar = ({ keywords }) => {
                 }}>
                     Skontaktuj się z nami - zapewnimy bezpieczny transport medyczny na terenie Raciborza i okolic.
                 </p>
-                <a href="tel:+48000000000" className="btn-premium" style={{
+                <a href="tel:+48602622840" className="btn-premium" style={{
                     padding: '12px 24px',
                     fontSize: '0.95rem',
                     width: '100%',

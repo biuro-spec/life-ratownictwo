@@ -144,7 +144,7 @@ const Hero = () => {
                         marginBottom: '64px',
                     }}
                 >
-                    <a href="tel:+48000000000" className="btn-premium" style={{ fontSize: isMobile ? '1rem' : '1.1rem' }}>
+                    <a href="tel:+48602622840" className="btn-premium" style={{ fontSize: isMobile ? '1rem' : '1.1rem' }}>
                         <Phone size={20} />
                         Zadzwoń teraz
                     </a>

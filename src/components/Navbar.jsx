@@ -118,7 +118,7 @@ const Navbar = ({ scrolled }) => {
                                 </Link>
                             ))}
                             <a
-                                href="tel:+48000000000"
+                                href="tel:+48602622840"
                                 className="btn-premium"
                                 style={{
                                     padding: '12px 28px',
@@ -243,7 +243,7 @@ const Navbar = ({ scrolled }) => {
                             transition={{ delay: navLinks.length * 0.05 }}
                             style={{ marginTop: '16px' }}
                         >
-                            <a href="tel:+48000000000" className="btn-premium" style={{ fontSize: '1.1rem' }}>
+                            <a href="tel:+48602622840" className="btn-premium" style={{ fontSize: '1.1rem' }}>
                                 <Phone size={20} />
                                 Zadzwoń teraz
                             </a>

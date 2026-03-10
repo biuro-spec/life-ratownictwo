@@ -50,7 +50,7 @@ const FloatingButtons = () => {
             </AnimatePresence>
 
             <motion.a
-                href="tel:+48000000000"
+                href="tel:+48602622840"
                 aria-label="Zadzwoń"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

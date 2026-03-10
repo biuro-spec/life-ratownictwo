@@ -68,7 +68,7 @@ const Contact = () => {
     });
 
     const contactInfo = [
-        { icon: Phone, label: 'Telefon dyżurny', value: '+48 000 000 000', href: 'tel:+48000000000' },
+        { icon: Phone, label: 'Telefon dyżurny', value: '+48 602 622 840', href: 'tel:+48602622840' },
         { icon: Mail, label: 'Email', value: 'kontakt@life-ratownictwo.pl', href: 'mailto:kontakt@life-ratownictwo.pl' },
         { icon: MapPin, label: 'Lokalizacja', value: 'Racibórz, woj. śląskie' },
         { icon: Clock, label: 'Godziny', value: 'Dyżur 24/7, 365 dni w roku' },
@@ -253,7 +253,7 @@ const Contact = () => {
                         ))}
 
                         <a
-                            href="tel:+48000000000"
+                            href="tel:+48602622840"
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
