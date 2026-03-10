@@ -68,7 +68,8 @@ const Contact = () => {
     });
 
     const contactInfo = [
-        { icon: Phone, label: 'Telefon dyżurny', value: '+48 602 622 840', href: 'tel:+48602622840' },
+        { icon: Phone, label: 'Mariusz - Dyspozytor', value: '+48 602 622 840', href: 'tel:+48602622840', primary: true },
+        { icon: Phone, label: 'Natka - Dyspozytor', value: '+48 505 751 858', href: 'tel:+48505751858', primary: true },
         { icon: Mail, label: 'Email', value: 'kontakt@life-ratownictwo.pl', href: 'mailto:kontakt@life-ratownictwo.pl' },
         { icon: MapPin, label: 'Lokalizacja', value: 'Racibórz, woj. śląskie' },
         { icon: Clock, label: 'Godziny', value: 'Dyżur 24/7, 365 dni w roku' },
@@ -215,13 +216,13 @@ const Contact = () => {
                                     width: '48px',
                                     height: '48px',
                                     borderRadius: '14px',
-                                    background: i === 0 ? 'var(--red-gradient)' : 'linear-gradient(135deg, rgba(21, 101, 192, 0.08), rgba(21, 101, 192, 0.04))',
+                                    background: info.primary ? 'var(--red-gradient)' : 'linear-gradient(135deg, rgba(21, 101, 192, 0.08), rgba(21, 101, 192, 0.04))',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     flexShrink: 0,
                                 }}>
-                                    <info.icon size={22} style={{ color: i === 0 ? '#ffffff' : 'var(--accent)' }} />
+                                    <info.icon size={22} style={{ color: info.primary ? '#ffffff' : 'var(--accent)' }} />
                                 </div>
                                 <div>
                                     <p style={{
@@ -232,7 +233,7 @@ const Contact = () => {
                                     {info.href ? (
                                         <a href={info.href} style={{
                                             fontWeight: 700,
-                                            fontSize: i === 0 ? '1.2rem' : '1rem',
+                                            fontSize: info.primary ? '1.2rem' : '1rem',
                                             color: 'var(--secondary)',
                                             textDecoration: 'none',
                                         }}

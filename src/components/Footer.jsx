@@ -90,7 +90,21 @@ const Footer = () => {
                                 onMouseEnter={(e) => e.currentTarget.style.color = '#E53935'}
                                 onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
                             >
-                                <Phone size={18} /> +48 602 622 840
+                                <Phone size={18} /> Mariusz: +48 602 622 840
+                            </a>
+                            <a href="tel:+48505751858" style={{
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                fontSize: '0.95rem',
+                                transition: 'color 0.3s ease',
+                            }}
+                                onMouseEnter={(e) => e.currentTarget.style.color = '#E53935'}
+                                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
+                            >
+                                <Phone size={18} /> Natka: +48 505 751 858
                             </a>
                             <a href="mailto:kontakt@life-ratownictwo.pl" style={{
                                 color: 'rgba(255, 255, 255, 0.6)',
