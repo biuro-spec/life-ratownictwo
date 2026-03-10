@@ -1,0 +1,21 @@
+{
+    "name": "Life Ratownictwo Medyczne i Przewozy",
+    "short_name": "Life RMiP",
+    "description": "Profesjonalny transport medyczny w Raciborzu i okolicach",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#B71C1C",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
