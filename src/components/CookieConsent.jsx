@@ -5,128 +5,61 @@ import { Cookie, X } from 'lucide-react';
 const STORAGE_KEY = 'life_cookie_consent';
 
 const CookieConsent = () => {
-    const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-    useEffect(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (!stored) {
-            const timer = setTimeout(() => setVisible(true), 1500);
-            return () => clearTimeout(timer);
-        }
-    }, []);
+  useEffect(() => {
+    const consent = localStorage.getItem(STORAGE_KEY);
+    if (!consent) {
+      const timer = setTimeout(() => setVisible(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
-    const accept = (type) => {
-        const consent = {
-            necessary: true,
-            functional: type === 'all',
-            statistical: type === 'all',
-            marketing: type === 'all',
-            timestamp: new Date().toISOString(),
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
-        setVisible(false);
-    };
+  const accept = () => {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    setVisible(false);
+  };
 
-    return (
-        <AnimatePresence>
-            {visible && (
-                <motion.div
-                    initial={{ y: 100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 100, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                        position: 'fixed',
-                        bottom: '24px',
-                        left: '24px',
-                        right: '24px',
-                        maxWidth: '520px',
-                        zIndex: 1500,
-                        background: 'white',
-                        borderRadius: '20px',
-                        padding: '24px',
-                        boxShadow: '0 20px 60px rgba(13, 27, 42, 0.15)',
-                        border: '1px solid rgba(13, 27, 42, 0.06)',
-                    }}
-                >
-                    <button
-                        onClick={() => accept('necessary')}
-                        style={{
-                            position: 'absolute',
-                            top: '12px',
-                            right: '12px',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '4px',
-                        }}
-                    >
-                        <X size={18} style={{ color: 'var(--charcoal)' }} />
-                    </button>
-
-                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                        <div style={{
-                            width: '44px',
-                            height: '44px',
-                            borderRadius: '12px',
-                            background: 'rgba(183, 28, 28, 0.08)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexShrink: 0,
-                        }}>
-                            <Cookie size={22} style={{ color: 'var(--primary)' }} />
-                        </div>
-                        <div>
-                            <h4 style={{
-                                fontFamily: 'Outfit, sans-serif',
-                                fontSize: '1rem',
-                                fontWeight: 700,
-                                color: 'var(--secondary)',
-                                marginBottom: '8px',
-                            }}>Pliki cookies</h4>
-                            <p style={{
-                                color: 'var(--charcoal)',
-                                fontSize: '0.85rem',
-                                lineHeight: 1.6,
-                                marginBottom: '16px',
-                            }}>
-                                Używamy plików cookies, aby zapewnić najlepszą jakość korzystania z naszej strony. Klikając "Akceptuję" zgadzasz się na ich wykorzystanie.
-                            </p>
-                            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                                <button
-                                    onClick={() => accept('all')}
-                                    className="btn-premium"
-                                    style={{
-                                        padding: '10px 24px',
-                                        fontSize: '0.88rem',
-                                    }}
-                                >
-                                    Akceptuję
-                                </button>
-                                <button
-                                    onClick={() => accept('necessary')}
-                                    style={{
-                                        padding: '10px 24px',
-                                        fontSize: '0.88rem',
-                                        borderRadius: '100px',
-                                        border: '2px solid rgba(13, 27, 42, 0.12)',
-                                        background: 'transparent',
-                                        color: 'var(--charcoal)',
-                                        fontWeight: 600,
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                    }}
-                                >
-                                    Tylko niezbędne
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6"
+        >
+          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-start gap-3 flex-1">
+              <div className="bg-primary-red/10 p-2 rounded-full shrink-0 mt-0.5">
+                <Cookie className="w-5 h-5 text-primary-red" />
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Ta strona korzysta z plików cookies w celu zapewnienia prawidłowego działania serwisu
+                oraz analizy ruchu. Korzystając ze strony wyrażasz zgodę na ich używanie.
+              </p>
+            </div>
+            <div className="flex gap-3 shrink-0 w-full sm:w-auto">
+              <button
+                onClick={accept}
+                className="flex-1 sm:flex-none bg-primary-red text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#ba1e17] hover:scale-105 transition-all shadow-lg shadow-primary-red/20"
+              >
+                Akceptuję
+              </button>
+              <button
+                onClick={() => setVisible(false)}
+                className="p-3 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                aria-label="Zamknij"
+              >
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default CookieConsent;
