@@ -1,141 +1,154 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, ShieldCheck, HeartPulse, ChevronRight, CheckCircle2, Clock, Star, Quote, MapPin, Phone, Mail, Users, FileCheck, BadgeCheck, ChevronLeft, Stethoscope, Droplets } from 'lucide-react';
+import { Truck, ShieldCheck, HeartPulse, ChevronRight, CheckCircle2, Clock, Star, MapPin, Phone, Mail, Users, FileCheck, BadgeCheck, Stethoscope, Droplets } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useSEO from '../hooks/useSEO';
 import { blogArticles } from '../data/blogArticles';
 
-const ReviewsCarousel = ({ reviews }) => {
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef(null);
-  const total = reviews.length;
+const AVATAR_COLORS = [
+  'bg-primary-red', 'bg-navy-blue', 'bg-[#1565C0]', 'bg-[#2e7d32]',
+  'bg-[#6a1b9a]', 'bg-[#e65100]', 'bg-[#00695c]', 'bg-[#c62828]', 'bg-[#37474f]',
+];
 
-  const next = useCallback(() => setActive(p => (p + 1) % total), [total]);
-  const prev = useCallback(() => setActive(p => (p - 1 + total) % total), [total]);
+const ReviewCard = ({ review, index, featured = false }) => {
+  const initials = review.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  const avatarColor = AVATAR_COLORS[index % AVATAR_COLORS.length];
+  return (
+    <motion.div
+      variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.35 }}
+      className={`relative rounded-3xl p-7 flex flex-col gap-4 h-full transition-all duration-300 ${
+        featured
+          ? 'bg-primary-red text-white shadow-2xl shadow-primary-red/30 ring-2 ring-primary-red'
+          : 'bg-white/[0.06] border border-white/10 hover:bg-white/[0.10]'
+      }`}
+    >
+      {/* Big quote mark */}
+      <span className={`absolute top-5 right-6 text-7xl font-black leading-none select-none pointer-events-none ${featured ? 'text-white/20' : 'text-white/8'}`}>&ldquo;</span>
 
-  useEffect(() => {
-    if (paused) return;
-    timerRef.current = setInterval(next, 5000);
-    return () => clearInterval(timerRef.current);
-  }, [paused, next]);
+      {/* Stars */}
+      <div className="flex gap-1">
+        {[...Array(5)].map((_, j) => (
+          <Star key={j} size={14} className="text-yellow-400 fill-yellow-400" />
+        ))}
+      </div>
 
-  // Show 3 on desktop, 1 on mobile
-  const getVisible = () => {
-    const items = [];
-    for (let offset = -1; offset <= 1; offset++) {
-      items.push((active + offset + total) % total);
-    }
-    return items;
-  };
-  const visible = getVisible();
+      {/* Text */}
+      <p className={`leading-relaxed text-sm flex-1 relative z-10 ${featured ? 'text-white/95' : 'text-white/75'}`}>
+        &ldquo;{review.text}&rdquo;
+      </p>
+
+      {/* Footer */}
+      <div className="flex items-center gap-3 pt-2 border-t border-white/10">
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-black text-white shrink-0 ${featured ? 'bg-white/20' : avatarColor}`}>
+          {initials}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className={`font-bold text-sm truncate ${featured ? 'text-white' : 'text-white/90'}`}>{review.name}</div>
+          <div className={`text-xs truncate ${featured ? 'text-white/70' : 'text-white/40'}`}>{review.category}</div>
+        </div>
+        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0 ${featured ? 'bg-white/20 text-white/80' : 'bg-white/10 text-white/40'}`}>
+          {review.source}
+        </span>
+      </div>
+    </motion.div>
+  );
+};
+
+const ReviewsSection = ({ reviews }) => {
+  // Split into 3 columns for masonry effect
+  const col1 = [0, 3, 6];
+  const col2 = [1, 4, 7];
+  const col3 = [2, 5, 8];
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="bg-primary-red/10 text-primary-red font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider mb-4 inline-block">Opinie pacjent&oacute;w</span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-navy-blue mb-6">Co m&oacute;wią o nas <span className="text-primary-red">pacjenci?</span></h2>
-          <div className="h-1.5 w-20 bg-primary-red mx-auto rounded-full mb-6"></div>
-          <div className="flex items-center justify-center gap-3 mb-4">
+    <section className="py-28 bg-navy-blue overflow-hidden relative">
+      {/* Subtle background blobs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-red/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#1565C0]/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Header */}
+        <motion.div
+          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="bg-primary-red/15 text-primary-red font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider mb-5 inline-block border border-primary-red/20">
+            Opinie pacjent&oacute;w
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+            Co m&oacute;wią o nas <span className="text-primary-red">pacjenci?</span>
+          </h2>
+          {/* Google rating badge */}
+          <div className="inline-flex items-center gap-4 bg-white/8 border border-white/12 rounded-2xl px-6 py-3 mt-2">
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={24} className="text-yellow-400 fill-yellow-400" />
+                <Star key={i} size={20} className="text-yellow-400 fill-yellow-400" />
               ))}
             </div>
-            <span className="text-2xl font-black text-navy-blue">5.0</span>
+            <span className="text-white font-black text-2xl">5.0</span>
+            <div className="w-px h-8 bg-white/20" />
+            <div className="text-left">
+              <div className="text-white font-bold text-sm">44 opinie</div>
+              <div className="text-white/50 text-xs">na Google Maps</div>
+            </div>
           </div>
-          <p className="text-gray-500 text-lg">44 opinie na Google &mdash; wszystkie na 5 gwiazdek.</p>
-        </div>
+        </motion.div>
 
-        <div
-          className="relative"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+        {/* Desktop masonry grid */}
+        <motion.div
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="hidden lg:grid lg:grid-cols-3 gap-5"
         >
-          {/* Navigation arrows - hidden on mobile */}
-          <button
-            onClick={prev}
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-20 w-12 h-12 bg-white rounded-full shadow-lg shadow-navy-blue/10 items-center justify-center text-navy-blue hover:bg-primary-red hover:text-white transition-all hover:scale-110"
-          >
-            <ChevronLeft size={22} />
-          </button>
-          <button
-            onClick={next}
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-20 w-12 h-12 bg-white rounded-full shadow-lg shadow-navy-blue/10 items-center justify-center text-navy-blue hover:bg-primary-red hover:text-white transition-all hover:scale-110"
-          >
-            <ChevronRight size={22} />
-          </button>
-
-          {/* Cards container */}
-          <div className="mx-2 md:mx-14">
-            {/* Mobile: single card */}
-            <div className="md:hidden">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, x: 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -60 }}
-                transition={{ duration: 0.4 }}
-                className="bg-[#f4f7f6] p-8 rounded-3xl relative border-2 border-white shadow-sm"
-              >
-                <Quote className="text-primary-red/15 w-12 h-12 absolute top-6 right-6" />
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} size={16} className="text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 leading-relaxed mb-6 relative z-10">&ldquo;{reviews[active].text}&rdquo;</p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-bold text-navy-blue">{reviews[active].name}</div>
-                    <div className="text-gray-400 text-xs">{reviews[active].category}</div>
-                  </div>
-                  <span className="text-xs font-bold text-gray-400 bg-white px-3 py-1 rounded-full">{reviews[active].source}</span>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Desktop: 3 cards */}
-            <div className="hidden md:grid md:grid-cols-3 gap-6">
-              {visible.map((idx, pos) => (
-                <motion.div
-                  key={`${active}-${idx}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: pos * 0.08 }}
-                  className={`bg-[#f4f7f6] p-8 rounded-3xl relative border-2 border-white shadow-sm transition-all ${pos === 1 ? 'scale-105 shadow-xl ring-2 ring-primary-red/10' : 'opacity-80 hover:opacity-100'}`}
-                >
-                  <Quote className="text-primary-red/15 w-12 h-12 absolute top-6 right-6" />
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} size={16} className="text-yellow-400 fill-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 leading-relaxed mb-6 relative z-10 line-clamp-4">&ldquo;{reviews[idx].text}&rdquo;</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-bold text-navy-blue">{reviews[idx].name}</div>
-                      <div className="text-gray-400 text-xs">{reviews[idx].category}</div>
-                    </div>
-                    <span className="text-xs font-bold text-gray-400 bg-white px-3 py-1 rounded-full">{reviews[idx].source}</span>
-                  </div>
-                </motion.div>
+          {[col1, col2, col3].map((col, ci) => (
+            <div key={ci} className={`flex flex-col gap-5 ${ci === 1 ? 'lg:mt-8' : ''}`}>
+              {col.map((idx) => (
+                <ReviewCard key={idx} review={reviews[idx]} index={idx} featured={idx === 1} />
               ))}
             </div>
-          </div>
+          ))}
+        </motion.div>
 
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {reviews.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActive(i)}
-                className={`rounded-full transition-all ${i === active ? 'w-8 h-3.5 md:h-3 bg-primary-red' : 'w-3.5 h-3.5 md:w-3 md:h-3 bg-gray-300 hover:bg-gray-400'}`}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Mobile: 2-col grid */}
+        <motion.div
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4"
+        >
+          {reviews.map((review, idx) => (
+            <ReviewCard key={idx} review={review} index={idx} featured={idx === 1} />
+          ))}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center mt-14"
+        >
+          <a
+            href="https://www.google.com/maps/search/life+ratownictwo+raciborz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-white/8 border border-white/15 text-white/70 hover:text-white hover:border-white/30 hover:bg-white/12 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200"
+          >
+            <Star size={15} className="text-yellow-400 fill-yellow-400" />
+            Przeczytaj wszystkie opinie na Google
+            <ChevronRight size={15} />
+          </a>
+        </motion.div>
       </div>
     </section>
   );
@@ -620,7 +633,7 @@ const Home = () => {
       </section>
 
       {/* Reviews Carousel */}
-      <ReviewsCarousel reviews={reviews} />
+      <ReviewsSection reviews={reviews} />
 
       {/* Legal / Podmiot Leczniczy */}
       <section className="py-24 bg-navy-blue text-white relative overflow-hidden">
