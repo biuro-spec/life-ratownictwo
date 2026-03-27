@@ -17,40 +17,42 @@ const Blog = () => {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero */}
-      <section className="relative min-h-[55vh] flex items-center text-white overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
-          style={{
-            backgroundImage: "linear-gradient(to right, rgba(15,43,70,0.92), rgba(15,43,70,0.75)), url('/gallery/ogólne/blog-aktualnosci-ratownictwo-medyczne.webp')",
-          }}
-        />
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-primary-red/10 skew-x-12 translate-x-1/4 z-[1]"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-black mb-6">Blog i <span className="text-primary-red">Aktualności</span></h1>
-          <p className="text-xl opacity-80 max-w-2xl mx-auto font-light">
-            Porady od czynnych ratowników medycznych, aktualności prawne i praktyczna wiedza z zakresu pierwszej pomocy.
-          </p>
+          style={{ backgroundImage: "url('/gallery/ogólne/blog-aktualnosci-ratownictwo-medyczne.webp')" }}
+        >
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, white 0%, rgba(255,255,255,0.97) 25%, rgba(255,255,255,0.7) 45%, rgba(255,255,255,0.25) 60%, rgba(255,255,255,0.05) 80%, rgba(255,255,255,0) 100%)' }}></div>
         </div>
-      </section>
-
-      {/* Categories */}
-      <section className="bg-[#f4f7f6] border-b border-gray-200">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {blogCategories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${
-                  activeCategory === cat
-                    ? 'bg-primary-red text-white shadow-lg shadow-primary-red/20'
-                    : 'bg-white text-gray-600 hover:text-navy-blue hover:shadow-md'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-28 sm:pt-32 pb-10 sm:pb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl"
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-navy-blue leading-[1.1] mb-4 sm:mb-6">
+              Blog i <span className="text-primary-red">Aktualności</span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl mb-10">
+              Porady od czynnych ratowników medycznych, aktualności prawne i praktyczna wiedza z zakresu pierwszej pomocy.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {blogCategories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm ${
+                    activeCategory === cat
+                      ? 'bg-primary-red text-white shadow-lg shadow-primary-red/30'
+                      : 'bg-white/80 backdrop-blur-sm text-navy-blue border border-white hover:shadow-md hover:-translate-y-0.5'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
