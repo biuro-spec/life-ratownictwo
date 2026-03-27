@@ -14,7 +14,7 @@ const ONas = () => {
 
   return (
     <div>
-      <section className="relative min-h-[520px] sm:min-h-[580px] flex items-center">
+      <section className="relative min-h-screen flex items-center">
         <div className="absolute inset-0 z-0 bg-cover bg-center" style={{ backgroundImage: "url('/gallery/ogólne/zespol-life-ratownictwo-racibórz.webp')" }}>
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, white 0%, rgba(255,255,255,0.95) 20%, rgba(255,255,255,0.75) 45%, rgba(255,255,255,0.4) 65%, rgba(255,255,255,0.25) 85%, rgba(255,255,255,0.15) 100%)' }}></div>
         </div>
