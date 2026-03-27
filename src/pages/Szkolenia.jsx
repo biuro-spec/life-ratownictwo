@@ -138,7 +138,7 @@ const Szkolenia = () => {
       title="Szkolenia z"
       titleAccent="Pierwszej Pomocy"
       subtitle="Ucz się od tych, którzy robią to na co dzień"
-      bgImage="/gallery/Szkolenia/Szkolenie z pierwszej pomocy na imprezach.webp"
+      bgImage="/gallery/namiot/szkolenia-pierwsza-pomoc-life-ratownictwo.webp"
       tiles={[
         { value: "Firmy", label: "Zakłady pracy", sub: "obowiązek BHP" },
         { value: "Szkoły", label: "Podstawowe i średnie", sub: "programy wg wieku" },
