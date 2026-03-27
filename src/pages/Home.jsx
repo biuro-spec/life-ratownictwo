@@ -93,7 +93,7 @@ const ReviewsSection = ({ reviews }) => {
             <span className="text-white font-black text-2xl">5.0</span>
             <div className="w-px h-8 bg-white/20" />
             <div className="text-left">
-              <div className="text-white font-bold text-sm">44 opinie</div>
+              <div className="text-white font-bold text-sm">43 opinie</div>
               <div className="text-white/50 text-xs">na Google Maps</div>
             </div>
           </div>
@@ -304,7 +304,7 @@ const Home = () => {
             {[
               "Podmiot leczniczy \u2014 pe\u0142na legalno\u015B\u0107",
               "3 ambulanse \u2014 gotowo\u015B\u0107 na ka\u017Cde wezwanie",
-              "Ponad 100 opinii 5\u2605 od pacjent\u00F3w",
+              "43 opinie 5\u2605 na Google",
               "Transport krajowy i zagraniczny",
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 text-white/80 text-sm font-medium">
@@ -596,7 +596,7 @@ const Home = () => {
                   { value: '12+', label: 'Lat na rynku', sub: 'Dzia\u0142amy nieprzerwanie od 2012 roku' },
                   { value: '3', label: 'Ambulanse', sub: 'W pe\u0142ni wyposa\u017Cone i certyfikowane' },
                   { value: '100%', label: 'Legalno\u015B\u0107', sub: 'Podmiot leczniczy \u2014 KRS 0000920762' },
-                  { value: '5\u2605', label: '\u015Arednia ocena', sub: 'Ponad 100 opinii pacjent\u00F3w' },
+                  { value: '5\u2605', label: '\u015Arednia ocena', sub: '43 opinie na Google' },
                 ].map((stat, i) => (
                   <motion.div
                     key={i}
