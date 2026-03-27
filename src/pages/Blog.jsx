@@ -17,11 +17,11 @@ const Blog = () => {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero */}
-      <section className="relative pt-40 pb-20 text-white overflow-hidden">
+      <section className="relative min-h-[55vh] flex items-center text-white overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
-            backgroundImage: "linear-gradient(to right, rgba(15,43,70,0.92), rgba(15,43,70,0.75)), url('/assets/images/Life-Ratownictwo-Medyczne-i-Pielegniarstwo.webp')",
+            backgroundImage: "linear-gradient(to right, rgba(15,43,70,0.92), rgba(15,43,70,0.75)), url('/gallery/ogólne/blog-aktualnosci-ratownictwo-medyczne.webp')",
           }}
         />
         <div className="absolute top-0 right-0 w-1/3 h-full bg-primary-red/10 skew-x-12 translate-x-1/4 z-[1]"></div>
