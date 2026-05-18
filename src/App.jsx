@@ -2,6 +2,7 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import ProtectedRoute from './components/ProtectedRoute';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +21,12 @@ const UslugiPielegniarskie = lazy(() => import('./pages/UslugiPielegniarskie'));
 const BlogArticle = lazy(() => import('./pages/BlogArticle'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const CookieConsent = lazy(() => import('./components/CookieConsent'));
+
+// KPP Panel
+const SzkolenieKPP   = lazy(() => import('./pages/SzkolenieKPP'));
+const KPPZapis       = lazy(() => import('./pages/KPPZapis'));
+const PanelLogin     = lazy(() => import('./pages/panel/PanelLogin'));
+const PanelDashboard = lazy(() => import('./pages/panel/PanelDashboard'));
 
 // ScrollToTop component to fix SPA scroll position issue
 const ScrollToTop = () => {
@@ -50,6 +57,12 @@ function App() {
               <Route path="/transport-prywatny" element={<TransportPrywatny />} />
               <Route path="/transport-miedzynarodowy" element={<TransportMiedzynarodowy />} />
               <Route path="/uslugi-pielegniarskie" element={<UslugiPielegniarskie />} />
+
+              {/* KPP */}
+              <Route path="/kpp" element={<SzkolenieKPP />} />
+              <Route path="/kpp/zapis" element={<KPPZapis />} />
+              <Route path="/kpp/panel" element={<PanelLogin />} />
+              <Route path="/kpp/panel/dashboard" element={<ProtectedRoute><PanelDashboard /></ProtectedRoute>} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
