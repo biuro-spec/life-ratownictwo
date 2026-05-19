@@ -52,7 +52,7 @@ export default function PanelLogin() {
           className="text-center mb-8"
         >
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <img src="/assets/images/life-ratownictwo-logo.webp" alt="LIFE Ratownictwo" className="h-10" />
+            <img src="/logo-red.png" alt="LIFE Ratownictwo" className="h-10" />
           </Link>
           <div className="inline-flex items-center gap-2 bg-primary-red/10 border border-primary-red/20 text-primary-red text-xs font-bold px-3 py-1.5 rounded-full">
             <GraduationCap size={14} /> Panel uczestnika KPP

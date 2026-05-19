@@ -120,7 +120,7 @@ export default function PanelDashboard() {
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-[#e5eaf0] flex flex-col p-5 shrink-0 hidden lg:flex">
         <Link to="/" className="mb-8 block">
-          <img src="/assets/images/life-ratownictwo-logo.webp" alt="LIFE Ratownictwo" className="h-9" />
+          <img src="/logo-red.png" alt="LIFE Ratownictwo" className="h-9" />
         </Link>
 
         <div className="space-y-1 flex-1">
