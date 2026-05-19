@@ -87,32 +87,17 @@ export default function PanelAdmin() {
 
   const createAccount = async (enrollment) => {
     setActionLoading(enrollment.id + 'create');
-    const tempPassword = Math.random().toString(36).slice(-8) + 'A1!';
-
-    const { data, error } = await supabase.auth.admin?.createUser({
-      email: enrollment.email,
-      password: tempPassword,
-      email_confirm: true,
-    }).catch(() => ({ error: { message: 'Admin API niedostępne' } }));
-
-    if (error) {
-      showToast('Nie można utworzyć konta przez panel – użyj Supabase Dashboard → Auth → Add user', false);
-      setActionLoading(null);
-      return;
-    }
-
-    if (data?.user) {
-      await supabase.from('kpp_participants').upsert({
-        id: data.user.id,
-        enrollment_id: enrollment.id,
-        first_name: enrollment.first_name,
-        last_name: enrollment.last_name,
-        email: enrollment.email,
-        course_id: enrollment.course_id,
-        access_granted: true,
+    try {
+      const { data, error } = await supabase.functions.invoke('confirm-enrollment', {
+        body: { enrollment_id: enrollment.id },
       });
-      await updateStatus(enrollment.id, 'confirmed');
-      showToast(`Konto utworzone! Hasło: ${tempPassword} – wyślij uczestnikowi!`);
+      if (error) throw error;
+      if (data?.ok) {
+        setEnrollments(prev => prev.map(e => e.id === enrollment.id ? { ...e, status: 'confirmed' } : e));
+        showToast('Konto utworzone! E-mail z hasłem wysłany do uczestnika.');
+      }
+    } catch (e) {
+      showToast('Błąd tworzenia konta: ' + (e?.message || String(e)), false);
     }
     setActionLoading(null);
   };
@@ -270,12 +255,12 @@ export default function PanelAdmin() {
                           )}
                           {e.status === 'paid' && (
                             <button
-                              onClick={() => updateStatus(e.id, 'confirmed')}
+                              onClick={() => createAccount(e)}
                               disabled={!!actionLoading}
                               className="flex items-center gap-1.5 text-xs bg-green-600 text-white px-3 py-1.5 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
                             >
-                              {actionLoading === e.id + 'confirmed' ? <Loader2 size={12} className="animate-spin" /> : <CheckCircle2 size={12} />}
-                              Potwierdź
+                              {actionLoading === e.id + 'create' ? <Loader2 size={12} className="animate-spin" /> : <UserPlus size={12} />}
+                              Utwórz konto
                             </button>
                           )}
                           {e.status !== 'cancelled' && (

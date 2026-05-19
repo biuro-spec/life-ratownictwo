@@ -34,7 +34,7 @@ const ONas = () => {
 
       <section className="py-24 bg-white relative">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-20">
                 <History className="text-primary-red w-12 h-12 mx-auto mb-6" />
                 <h2 className="text-4xl md:text-5xl font-black text-navy-blue mb-4">Kamienie Milowe</h2>
@@ -42,20 +42,20 @@ const ONas = () => {
             </div>
             <div className="space-y-12">
               {timeline.map((item, i) => (
-                <motion.div 
+                <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
+                  className={`flex flex-col md:flex-row items-center gap-10 ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
                 >
-                  <div className="w-24 h-24 bg-[#f4f7f6] text-primary-red rounded-full flex items-center justify-center shrink-0 shadow-inner border-2 border-white">
+                  <div className="w-28 h-28 bg-[#f4f7f6] text-primary-red rounded-full flex items-center justify-center shrink-0 shadow-inner border-2 border-white">
                     {item.icon}
                   </div>
-                  <div className={`p-10 bg-[#f4f7f6] rounded-[40px] flex-grow shadow-sm hover:shadow-xl transition-all border-2 border-white ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                  <div className={`p-12 bg-[#f4f7f6] rounded-[40px] flex-grow shadow-sm hover:shadow-xl transition-all border-2 border-white ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
                     <span className="text-primary-red font-black text-3xl mb-2 block">{item.year}</span>
                     <h3 className="text-2xl font-bold text-navy-blue mb-4">{item.title}</h3>
-                    <p className="text-gray-600 font-medium leading-relaxed">{item.desc}</p>
+                    <p className="text-gray-600 font-medium leading-relaxed text-lg">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
