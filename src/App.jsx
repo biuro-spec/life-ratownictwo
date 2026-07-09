@@ -29,6 +29,17 @@ const PanelDashboard = lazy(() => import('./pages/panel/PanelDashboard'));
 const PanelMaterialy = lazy(() => import('./pages/panel/PanelMaterialy'));
 const PanelTesty     = lazy(() => import('./pages/panel/PanelTesty'));
 const PanelAdmin     = lazy(() => import('./pages/panel/PanelAdmin'));
+const PanelKonto     = lazy(() => import('./pages/panel/PanelKonto'));
+const PanelHarmonogram = lazy(() => import('./pages/panel/PanelHarmonogram'));
+const PanelCertyfikat = lazy(() => import('./pages/panel/PanelCertyfikat'));
+
+// Panel rozliczeń transportu
+const TransportLogin       = lazy(() => import('./pages/transport-panel/TransportLogin'));
+const TransportDashboard   = lazy(() => import('./pages/transport-panel/TransportDashboard'));
+const TransportOrderForm   = lazy(() => import('./pages/transport-panel/TransportOrderForm'));
+const TransportKontrahenci = lazy(() => import('./pages/transport-panel/TransportKontrahenci'));
+const TransportRozliczenia = lazy(() => import('./pages/transport-panel/TransportRozliczenia'));
+const TransportProtected    = lazy(() => import('./pages/transport-panel/TransportProtected'));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -113,7 +124,7 @@ const Footer = () => (
 // Główny layout – ukrywa navbar/footer dla stron panelu
 const Layout = ({ children }) => {
   const { pathname } = useLocation();
-  const isPanel = pathname.startsWith('/kpp/panel') || pathname.startsWith('/kpp/admin');
+  const isPanel = pathname.startsWith('/kpp/panel') || pathname.startsWith('/kpp/admin') || pathname.startsWith('/transport/panel');
   return (
     <div className="flex flex-col min-h-screen">
       {!isPanel && <Navbar />}
@@ -155,7 +166,17 @@ function App() {
           <Route path="/kpp/panel/dashboard"  element={<ProtectedRoute><PanelDashboard /></ProtectedRoute>} />
           <Route path="/kpp/panel/materialy"  element={<ProtectedRoute><PanelMaterialy /></ProtectedRoute>} />
           <Route path="/kpp/panel/testy"      element={<ProtectedRoute><PanelTesty /></ProtectedRoute>} />
+          <Route path="/kpp/panel/konto"      element={<ProtectedRoute><PanelKonto /></ProtectedRoute>} />
+          <Route path="/kpp/panel/harmonogram" element={<ProtectedRoute><PanelHarmonogram /></ProtectedRoute>} />
+          <Route path="/kpp/panel/certyfikat" element={<ProtectedRoute><PanelCertyfikat /></ProtectedRoute>} />
           <Route path="/kpp/admin"            element={<ProtectedRoute><PanelAdmin /></ProtectedRoute>} />
+
+          {/* Panel rozliczeń transportu (bez navbar/footer) */}
+          <Route path="/transport/panel" element={<TransportLogin />} />
+          <Route path="/transport/panel/zlecenia"    element={<TransportProtected><TransportDashboard /></TransportProtected>} />
+          <Route path="/transport/panel/nowe"        element={<TransportProtected><TransportOrderForm /></TransportProtected>} />
+          <Route path="/transport/panel/kontrahenci" element={<TransportProtected><TransportKontrahenci /></TransportProtected>} />
+          <Route path="/transport/panel/rozliczenia" element={<TransportProtected><TransportRozliczenia /></TransportProtected>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
